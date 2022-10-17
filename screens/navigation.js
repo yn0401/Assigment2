@@ -7,6 +7,7 @@ import { ViewAllScreen } from './viewall';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { default as theme } from '../custom-theme.json'; // <-- Import app theme
+import { AddScreen } from './add';
 
 
 const { Navigator, Screen } = createStackNavigator();
@@ -16,6 +17,7 @@ const HomeNavigator = () => (
         <Screen name='Home' component={HomeScreen} />
         <Screen name='Details' component={DetailsScreen} />
         <Screen name="ViewAll" component={ViewAllScreen}/>
+        <Screen name="Add" component={AddScreen}/>
     </Navigator>
 );
 

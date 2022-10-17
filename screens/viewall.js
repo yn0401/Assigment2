@@ -14,6 +14,9 @@ import {
 } from '@ui-kitten/components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+const EditIcon = (props) => (
+    <Icon {...props} name='edit' />
+);
 
 const data = new Array(8).fill({
     title: 'Item',
@@ -24,8 +27,6 @@ const data = new Array(8).fill({
 const BackIcon = (props) => (
     <Icon {...props} name='arrow-back' />
 );
-
-
 
 const ItemImage = (props) => (
     <Avatar
@@ -38,13 +39,14 @@ const ItemImage = (props) => (
 
 export const ViewAllScreen = ({ navigation }) => {
 
-    const InstallButton = (props) => (
+    const navigateDetail = () => {
+        navigation.navigate('Details');
+    };
 
+    const InstallButton = (props) => (
         <Button size='medium' style={styles.btn} onPress={navigateDetail}>
             DETAIL
         </Button>
-
-
     );
 
     const navigateBack = () => {
@@ -55,8 +57,14 @@ export const ViewAllScreen = ({ navigation }) => {
         <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
     );
 
-    const navigateDetail = () => {
-        navigation.navigate('Details');
+    const renderRightActions = () => (
+        <React.Fragment>
+            <TopNavigationAction icon={EditIcon} onPress={navigateAdd} />
+        </React.Fragment>
+    );
+
+    const navigateAdd = () => {
+        navigation.navigate("Add");
     };
 
     const renderItem = ({ item, index }) => (
@@ -70,7 +78,11 @@ export const ViewAllScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <TopNavigation title='OUR PRODUCTS' alignment='center' accessoryLeft={BackAction} />
+            <TopNavigation
+                title='OUR PRODUCTS'
+                alignment='center'
+                accessoryLeft={BackAction}
+                accessoryRight={renderRightActions} />
             <Divider />
             <Layout style={styles.main}>
                 <List
