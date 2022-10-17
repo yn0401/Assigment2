@@ -10,7 +10,8 @@ import {
     Avatar,
     ListItem,
     Button,
-    List
+    List,
+    Input
 } from '@ui-kitten/components';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -18,7 +19,12 @@ const EditIcon = (props) => (
     <Icon {...props} name='edit' />
 );
 
+const SearchIcon = (props) => (
+    <Icon {...props} name='search-outline' />
+);
+
 const data = new Array(8).fill({
+
     title: 'Item',
     description: 'Description for Item',
     cost: '7000$'
@@ -39,16 +45,18 @@ const ItemImage = (props) => (
 
 export const ViewAllScreen = ({ navigation }) => {
 
-    const navigateDetail = () => {
-        navigation.navigate('Details');
-    };
+    const [value, setValue] = React.useState('');
+    console.log(value)
 
-    const InstallButton = (props) => (
-        <Button size='medium' style={styles.btn} onPress={navigateDetail}>
-            DETAIL
-        </Button>
-    );
-
+    const InstallButton = (props) => {
+        console.log(props)
+        return(
+            <Button  style={styles.btn} onPress={() => navigation.navigate('Details',{item : props})}>
+                DETAIL
+            </Button>
+        );
+    }
+     
     const navigateBack = () => {
         navigation.goBack();
     };
@@ -72,7 +80,7 @@ export const ViewAllScreen = ({ navigation }) => {
             title={`${item.title} ${index + 1}`}
             description={`${item.cost}`}
             accessoryLeft={ItemImage}
-            accessoryRight={InstallButton}
+            accessoryRight={InstallButton(item)}
         />
     );
 
@@ -84,6 +92,16 @@ export const ViewAllScreen = ({ navigation }) => {
                 accessoryLeft={BackAction}
                 accessoryRight={renderRightActions} />
             <Divider />
+            <Layout style={styles.header}>
+                <Input
+                    style={styles.input}
+                    value={value}
+                    placeholder='Search'
+                    accessoryRight={SearchIcon}
+                    onChangeText={nextValue => setValue(nextValue)}
+
+                />
+            </Layout>
             <Layout style={styles.main}>
                 <List
                     style={styles.container}
@@ -103,10 +121,19 @@ const styles = StyleSheet.create({
     },
     btn: {
         backgroundColor: '#222b45',
+        width: 70
     },
     container: {
         flex: 1
-    }
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    input: {
+        width: '95%',
+        margin: 5,
+    },
 
 
 })
